@@ -1,10 +1,11 @@
-package kz.olzhas.employeeserver.model;
+package kz.olzhas.employeeserver.model.employee;
 
 import jakarta.persistence.*;
+import kz.olzhas.employeeserver.model.kpi.KPIFact;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "t_employee")
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,16 +28,15 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
-    private String password;
+    @ManyToOne()
+    @JoinColumn(name = "role_id")
+    private JobRole jobRole;
+
+    @OneToMany()
+    @JoinColumn(name = "employee_id")
+    private List<KPIFact> kpiFacts;
 
     @Column(name = "date_of_start")
     private Date dateOfStart;
-
-    @Column(name = "role")
-    private String role;
-
-    @Column(name = "salary")
-    private BigDecimal salary;
 
 }

@@ -4,10 +4,16 @@ spring:
   application:
     name: restaurant-service
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    url: jdbc:postgresql://localhost:5436/bi_system?currentSchema=restaurant
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: create
 
 server:
-  port: ${SERVER_PORT}
+  port: 8081
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

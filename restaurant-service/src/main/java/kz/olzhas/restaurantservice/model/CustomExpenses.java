@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_restaurant")
-public class Restaurant {
+@Table(name = "t_custom_expenses")
+public class CustomExpenses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -22,21 +23,9 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "cost")
+    private BigDecimal cost;
 
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "revenue")
-    private BigDecimal revenue;
-
-    @Column(name = "profit")
-    private BigDecimal profit;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expenses_id")
-    private Expenses expenses;
-
-
+    @Column(name = "date")
+    private Date theDate;
 }
