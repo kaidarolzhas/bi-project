@@ -13,4 +13,5 @@ public interface KpiStandardRepository extends JpaRepository<KpiStandard, Long> 
     List<KpiStandard> findAllByJobRoleRole(String job);
     Optional<KpiStandard> findByJobRoleRole(String role);
     boolean existsByJobRoleRole(String role);
+
 }

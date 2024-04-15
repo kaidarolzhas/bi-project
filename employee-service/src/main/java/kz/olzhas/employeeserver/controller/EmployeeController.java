@@ -11,8 +11,10 @@ import kz.olzhas.employeeserver.mapper.employee.ResponseRoleMapper;
 import kz.olzhas.employeeserver.model.employee.Employee;
 
 import kz.olzhas.employeeserver.model.employee.JobRole;
+import kz.olzhas.employeeserver.model.kpi.KPIFact;
 import kz.olzhas.employeeserver.service.EmployeeService;
 import kz.olzhas.employeeserver.service.JobRoleService;
+import kz.olzhas.employeeserver.service.KpiFactService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -27,14 +29,18 @@ import java.util.Optional;
 public class EmployeeController {
     private final EmployeeRequestMapper employeeRequestMapper;
     private final EmployeeResponseMapper employeeResponseMapper;
-    private final RequestRoleMapper requestRoleMapper;
-    private final ResponseRoleMapper responseRoleMapper;
     private final EmployeeService employeeService;
     private final JobRoleService jobRoleService;
+    private final KpiFactService kpiFactService;
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse getEmployee(@PathVariable Long id) throws BadRequestException {
-        return employeeResponseMapper.toDto(employeeService.getEmployee(id));
+    public EmployeeRequest getEmployee(@PathVariable Long id) throws BadRequestException {
+        EmployeeRequest employeeRequest = employeeRequestMapper.toDto(employeeService.getEmployee(id));
+        List<KPIFact> kpiFacts = kpiFactService.kpiFactsByUserId(employeeRequest.getId());
+        if(!kpiFacts.isEmpty()){
+            employeeRequest.setKpiFacts(kpiFacts);
+        }
+        return employeeRequest;
     }
 
     @PostMapping()
@@ -78,8 +84,13 @@ public class EmployeeController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeResponse> getEmployees() throws BadRequestException {
-        return employeeResponseMapper.toDtoList(employeeService.getEmployees());
+    public List<EmployeeRequest> getEmployees() throws BadRequestException {
+        List<EmployeeRequest> employeeRequests =  employeeRequestMapper.toDtoList(employeeService.getEmployees());
+        for(EmployeeRequest request: employeeRequests){
+            List<KPIFact> kpiFacts = kpiFactService.kpiFactsByUserId(request.getId());
+            request.setKpiFacts(kpiFacts);
+        };
+        return employeeRequests;
     }
 
     @GetMapping("/getRoles")

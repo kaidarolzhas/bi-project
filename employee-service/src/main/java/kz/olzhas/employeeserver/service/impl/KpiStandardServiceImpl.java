@@ -29,7 +29,11 @@ public class KpiStandardServiceImpl implements KpiStandardService {
     @Override
     public boolean save(KpiStandard kpiStandard) {
         List<KpiStandard> kpiStandardCheck = kpiStandardRepository.findAllByJobRoleId(kpiStandard.getJobRole().getId());
-        if(!kpiStandardCheck.isEmpty()){
+        Double sum = 0.0;
+        for(KpiStandard kpiStandard1 :kpiStandardCheck){
+            sum+=kpiStandard1.getPercent();
+        }
+        if(sum>=1){
             return false;
         }
         else {

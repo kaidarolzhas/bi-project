@@ -14,5 +14,4 @@ public class KpiStandardDto {
     private Double value;
     private Double percent;
     private JobRole role;
-
 }

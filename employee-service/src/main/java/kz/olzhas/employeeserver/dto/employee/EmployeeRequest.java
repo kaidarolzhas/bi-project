@@ -27,5 +27,4 @@ public class EmployeeRequest {
 
     private List<KPIFact> kpiFacts;
 
-
 }

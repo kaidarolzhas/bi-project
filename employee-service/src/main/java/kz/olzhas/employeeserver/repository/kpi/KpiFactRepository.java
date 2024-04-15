@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface KpiFactRepository extends JpaRepository<KPIFact, Long> {
+    List<KPIFact> findAllByEmployeeId(Long userId);
 }

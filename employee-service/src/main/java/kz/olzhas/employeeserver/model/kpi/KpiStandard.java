@@ -33,4 +33,5 @@ public class KpiStandard {
     @JoinColumn(name = "role_id")
     private JobRole jobRole;
 
+
 }

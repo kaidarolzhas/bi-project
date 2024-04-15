@@ -32,10 +32,6 @@ public class Employee {
     @JoinColumn(name = "role_id")
     private JobRole jobRole;
 
-    @OneToMany()
-    @JoinColumn(name = "employee_id")
-    private List<KPIFact> kpiFacts;
-
     @Column(name = "date_of_start")
     private Date dateOfStart;
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kpi")
+@RequestMapping("/api/employee/kpi")
 @RequiredArgsConstructor
 public class KpiController {
     private final KpiStandardService kpiStandardService;

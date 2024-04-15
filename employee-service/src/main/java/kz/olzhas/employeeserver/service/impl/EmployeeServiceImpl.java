@@ -46,7 +46,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .email(employeeRequest.getEmail())
                 .jobRole(actualJobRole)
                 .dateOfStart(employeeRequest.getDateOfStart())
-                .kpiFacts(null)
                 .build();
 
         employeeRepository.save(employee);
@@ -64,7 +63,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 );
             }
         }
-        employee.setKpiFacts(kpiFacts);
         kpiFactRepository.saveAll(kpiFacts);
     }
 
@@ -82,7 +80,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         existingEmployee.setLastName(newEmployee.getLastName());
         existingEmployee.setJobRole(newEmployee.getJobRole());
         existingEmployee.setDateOfStart(newEmployee.getDateOfStart());
-        existingEmployee.setKpiFacts(newEmployee.getKpiFacts());
 
         employeeRepository.save(existingEmployee);
     }
