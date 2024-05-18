@@ -1,13 +1,10 @@
 package kz.olzhas.employeeserver.controller;
 
 import kz.olzhas.employeeserver.dto.employee.EmployeeRequest;
-import kz.olzhas.employeeserver.dto.employee.EmployeeResponse;
 import kz.olzhas.employeeserver.dto.employee.RequestRoleDto;
 import kz.olzhas.employeeserver.dto.employee.ResponseRoleDto;
 import kz.olzhas.employeeserver.mapper.employee.EmployeeResponseMapper;
 import kz.olzhas.employeeserver.mapper.employee.EmployeeRequestMapper;
-import kz.olzhas.employeeserver.mapper.employee.RequestRoleMapper;
-import kz.olzhas.employeeserver.mapper.employee.ResponseRoleMapper;
 import kz.olzhas.employeeserver.model.employee.Employee;
 
 import kz.olzhas.employeeserver.model.employee.JobRole;

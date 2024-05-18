@@ -1,9 +1,11 @@
 package kz.olzhas.employeeserver.controller;
 
+import kz.olzhas.employeeserver.dto.employee.EmployeeRequest;
 import kz.olzhas.employeeserver.dto.kpi.KpiStandardDto;
 import kz.olzhas.employeeserver.mapper.kpi.KpiStandardMapper;
 import kz.olzhas.employeeserver.model.employee.JobRole;
 import kz.olzhas.employeeserver.model.kpi.KpiStandard;
+import kz.olzhas.employeeserver.service.KpiFactService;
 import kz.olzhas.employeeserver.service.KpiStandardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ import java.util.List;
 public class KpiController {
     private final KpiStandardService kpiStandardService;
     private final KpiStandardMapper kpiStandardMapper;
-
+    private final KpiFactService kpiFactService;
 
     @GetMapping("/{job}")
     @ResponseStatus(HttpStatus.OK)
@@ -37,6 +39,18 @@ public class KpiController {
     public HttpStatus createKpi(@RequestBody KpiStandardDto kpiStandardDto) {
         KpiStandard kpiStandard = kpiStandardMapper.toEntity(kpiStandardDto);
         return kpiStandardService.save(kpiStandard) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+    }
+
+    @GetMapping("/update/kpi/weak")
+    @ResponseStatus(HttpStatus.OK)
+    public void getKpiWeak(EmployeeRequest employeeRequest){
+        kpiFactService.setKpiWeak(employeeRequest);
+    }
+
+    @GetMapping("/update/kpi/month")
+    @ResponseStatus(HttpStatus.OK)
+    public void getKpiMonth(EmployeeRequest employeeRequest){
+        kpiFactService.setKpiMonth(employeeRequest);
     }
 
 }

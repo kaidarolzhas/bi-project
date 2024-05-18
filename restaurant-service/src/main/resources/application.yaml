@@ -4,7 +4,7 @@ spring:
   application:
     name: restaurant-service
   datasource:
-    url: jdbc:postgresql://localhost:5436/bi_system?currentSchema=restaurant
+    url: jdbc:postgresql://localhost:5436/bi_system
     username: postgres
     password: postgres
   jpa:

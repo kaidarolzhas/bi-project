@@ -17,4 +17,5 @@ public interface JobRoleService {
      void createRoles(RequestRoleDto requestRoleDto);
 
     void updateRole(JobRole role) throws BadRequestException;
+    Optional<JobRole> getJob(String role);
 }

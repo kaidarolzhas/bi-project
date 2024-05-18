@@ -5,6 +5,9 @@ spring:
     url: jdbc:postgresql://localhost:5436/bi_system?currentSchema=inventory
     username: postgres
     password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
 eureka:
   client:
     serviceUrl:

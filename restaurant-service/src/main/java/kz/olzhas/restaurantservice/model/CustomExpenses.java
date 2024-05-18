@@ -9,12 +9,13 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "t_custom_expenses")
+@Entity
 public class CustomExpenses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

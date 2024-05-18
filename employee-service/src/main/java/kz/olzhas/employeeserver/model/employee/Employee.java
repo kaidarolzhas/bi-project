@@ -35,4 +35,10 @@ public class Employee {
     @Column(name = "date_of_start")
     private Date dateOfStart;
 
+    @Column(name = "kpi_month")
+    private double kpiMonth;
+
+    @Column(name = "kpi_weak")
+    private double kpiWeak;
+
 }
