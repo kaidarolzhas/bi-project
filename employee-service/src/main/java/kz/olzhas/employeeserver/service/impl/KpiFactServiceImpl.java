@@ -37,30 +37,34 @@ public class KpiFactServiceImpl implements KpiFactService {
 
 
     @Override
-    public double getKpiMonth(EmployeeRequest employeeRequest) {
+    public Double getKpiMonth(EmployeeRequest employeeRequest) {
         String role = employeeRequest.getRole();
         List<KpiStandard> kpiStandardList = kpiStandardService.getAllByRole(role);
         List<KPIFact> kpiFactList = kpiFactRepository.findAllByEmployeeId(employeeRequest.getId());
         double sum = 0;
         //(fact/norm)*percent
-        for (int i = 0; i <kpiFactList.size(); i++ ){
-            if(Objects.equals(kpiFactList.get(i).getName(), kpiStandardList.get(i).getName())){
-                sum += (kpiFactList.get(i).getValue()/kpiStandardList.get(i).getValue())* kpiStandardList.get(i).getPercent();
+        for (KpiStandard kpiStandard : kpiStandardList){
+            for (KPIFact kpiFact : kpiFactList){
+                if(Objects.equals(kpiFact.getName(), kpiStandard.getName())){
+                    sum += (kpiFact.getValue()/kpiStandard.getValue())* kpiStandard.getPercent();
+                }
             }
         }
         return sum;
     }
 
     @Override
-    public double getKpiWeak(EmployeeRequest employeeRequest) {
+    public Double getKpiWeak(EmployeeRequest employeeRequest) {
         String role = employeeRequest.getRole();
         List<KpiStandard> kpiStandardList = getKpiStandardWeak(role);
         List<KPIFact> kpiFactList = kpiFactRepository.findAllByEmployeeId(employeeRequest.getId());
         double sum = 0;
         //(fact/norm)*percent
-        for (int i = 0; i <kpiFactList.size(); i++ ){
-            if(Objects.equals(kpiFactList.get(i).getName(), kpiStandardList.get(i).getName())){
-                sum += (kpiFactList.get(i).getValue()/kpiStandardList.get(i).getValue())* kpiStandardList.get(i).getPercent();
+        for (KpiStandard kpiStandard : kpiStandardList){
+            for (KPIFact kpiFact : kpiFactList){
+                if(Objects.equals(kpiFact.getName(), kpiStandard.getName())){
+                    sum += (kpiFact.getValue()/kpiStandard.getValue())* kpiStandard.getPercent();
+                }
             }
         }
         return sum;
@@ -78,13 +82,19 @@ public class KpiFactServiceImpl implements KpiFactService {
     @Override
     public void setKpiMonth(EmployeeRequest employeeRequest) {
         Optional<Employee> employee = employeeRepository.findById(employeeRequest.getId());
-        employee.ifPresent(value -> value.setKpiMonth(getKpiMonth(employeeRequest)));
+        if(employee.isPresent()){
+            employee.get().setKpiMonth(getKpiMonth(employeeRequest));
+            employeeRepository.saveAndFlush(employee.get());
+        }
     }
 
     @Override
     public void setKpiWeak(EmployeeRequest employeeRequest) {
         Optional<Employee> employee = employeeRepository.findById(employeeRequest.getId());
-        employee.ifPresent(value -> value.setKpiMonth(getKpiWeak(employeeRequest)));
+        if(employee.isPresent()){
+            employee.get().setKpiWeak(getKpiWeak(employeeRequest));
+            employeeRepository.saveAndFlush(employee.get());
+        }
     }
 
 }

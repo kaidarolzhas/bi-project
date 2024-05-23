@@ -27,4 +27,8 @@ public class EmployeeRequest {
 
     private List<KPIFact> kpiFacts;
 
+    private Double kpiMonth;
+
+    private Double kpiWeak;
+
 }

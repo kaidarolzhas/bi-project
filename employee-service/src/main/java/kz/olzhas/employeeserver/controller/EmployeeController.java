@@ -82,12 +82,17 @@ public class EmployeeController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<EmployeeRequest> getEmployees() throws BadRequestException {
-        List<EmployeeRequest> employeeRequests =  employeeRequestMapper.toDtoList(employeeService.getEmployees());
-        for(EmployeeRequest request: employeeRequests){
-            List<KPIFact> kpiFacts = kpiFactService.kpiFactsByUserId(request.getId());
-            request.setKpiFacts(kpiFacts);
+        List<Employee> employees =  employeeService.getEmployees();
+        List<EmployeeRequest> employeesRequestList =  employeeRequestMapper.toDtoList(employees);
+        for(Employee employee: employees){
+            for(EmployeeRequest request:employeesRequestList ) {
+                Optional<JobRole> jobRole = jobRoleService.getRole(employee.getJobRole().getId());
+                List<KPIFact> kpiFacts = kpiFactService.kpiFactsByUserId(request.getId());
+                request.setKpiFacts(kpiFacts);
+                jobRole.ifPresent(role -> request.setRole(role.getRole()));
+            }
         };
-        return employeeRequests;
+        return employeesRequestList;
     }
 
     @GetMapping("/getRoles")

@@ -36,9 +36,9 @@ public class Employee {
     private Date dateOfStart;
 
     @Column(name = "kpi_month")
-    private double kpiMonth;
+    private Double kpiMonth;
 
     @Column(name = "kpi_weak")
-    private double kpiWeak;
+    private Double kpiWeak;
 
 }

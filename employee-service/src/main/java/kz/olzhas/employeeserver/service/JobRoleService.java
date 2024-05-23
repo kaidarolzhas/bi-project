@@ -18,4 +18,5 @@ public interface JobRoleService {
 
     void updateRole(JobRole role) throws BadRequestException;
     Optional<JobRole> getJob(String role);
+    Optional<JobRole> getRole(Long id);
 }

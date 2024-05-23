@@ -41,15 +41,15 @@ public class KpiController {
         return kpiStandardService.save(kpiStandard) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
     }
 
-    @GetMapping("/update/kpi/weak")
+    @PostMapping("/update/kpi/weak")
     @ResponseStatus(HttpStatus.OK)
-    public void getKpiWeak(EmployeeRequest employeeRequest){
+    public void getKpiWeak(@RequestBody EmployeeRequest employeeRequest){
         kpiFactService.setKpiWeak(employeeRequest);
     }
 
-    @GetMapping("/update/kpi/month")
+    @PostMapping("/update/kpi/month")
     @ResponseStatus(HttpStatus.OK)
-    public void getKpiMonth(EmployeeRequest employeeRequest){
+    public void getKpiMonth(@RequestBody EmployeeRequest employeeRequest){
         kpiFactService.setKpiMonth(employeeRequest);
     }
 

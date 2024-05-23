@@ -73,5 +73,10 @@ public class JobRolesServiceImpl implements JobRoleService {
         return jobRoleRepository.findByRole(role);
     }
 
+    @Override
+    public Optional<JobRole> getRole(Long id) {
+            return jobRoleRepository.findById(id);
+    }
+
 
 }

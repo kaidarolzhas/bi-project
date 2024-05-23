@@ -10,9 +10,9 @@ import java.util.List;
 public interface KpiFactService {
     List<KPIFact> kpiFactsByUserId(Long userId);
 
-    double getKpiMonth(EmployeeRequest employeeRequest);
+    Double getKpiMonth(EmployeeRequest employeeRequest);
 
-    double getKpiWeak(EmployeeRequest employeeRequest);
+    Double getKpiWeak(EmployeeRequest employeeRequest);
     List<KpiStandard> getKpiStandardWeak(String role);
 
     void setKpiMonth(EmployeeRequest employeeRequest);
