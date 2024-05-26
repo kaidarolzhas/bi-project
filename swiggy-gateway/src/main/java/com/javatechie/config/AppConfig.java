@@ -18,22 +18,7 @@ public class AppConfig {
        return new RestTemplate();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); // Replace with your allowed origins
-        configuration.setAllowedMethods(Arrays.asList("*")); // Allow all HTTP methods
-        configuration.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
-        configuration.setAllowCredentials(true); // Allow credentials (e.g., cookies)
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
 
-        return source;
-    }
 
-    @Bean
-    public CorsFilter corsFilter() {
-        return new CorsFilter(corsConfigurationSource());
-    }
 }
