@@ -3,20 +3,18 @@ package kz.olzhas.controller;
 import kz.olzhas.dto.AuthRequest;
 import kz.olzhas.entity.UserCredential;
 import kz.olzhas.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    private AuthService service;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthService service;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
     public String addNewUser(@RequestBody UserCredential user) {
