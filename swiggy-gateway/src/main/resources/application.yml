@@ -1,6 +1,15 @@
 spring:
  cloud:
    gateway:
+     globalcors:
+       cors-configurations:
+         '[/**]':
+           allowedOrigins: "https://docs.spring.io"
+           allowedMethods:
+             - GET
+             - POST
+             - PUT
+             - DELETE
      routes:
        - id: restaurant-service
          uri: http://localhost:8086
@@ -28,3 +37,4 @@ eureka:
   client:
     service-url:
       defaultZone : http://localhost:8761/eureka/
+
