@@ -9,6 +9,7 @@ import kz.olzhas.employeeserver.model.employee.Employee;
 
 import kz.olzhas.employeeserver.model.employee.JobRole;
 import kz.olzhas.employeeserver.model.kpi.KPIFact;
+import kz.olzhas.employeeserver.repository.kpi.KpiFactRepository;
 import kz.olzhas.employeeserver.service.EmployeeService;
 import kz.olzhas.employeeserver.service.JobRoleService;
 import kz.olzhas.employeeserver.service.KpiFactService;
@@ -26,6 +27,7 @@ import java.util.Optional;
 public class EmployeeController {
     private final EmployeeRequestMapper employeeRequestMapper;
     private final EmployeeResponseMapper employeeResponseMapper;
+    private final KpiFactRepository kpiFactRepository;
     private final EmployeeService employeeService;
     private final JobRoleService jobRoleService;
     private final KpiFactService kpiFactService;
@@ -57,13 +59,20 @@ public class EmployeeController {
     ) throws BadRequestException {
         Employee employee = employeeRequestMapper.toEntity(employeeRequest);
         Optional<JobRole> jobRole = jobRoleService.getByRole(employeeRequest.getRole());
+        List<KPIFact> kpiFacts = kpiFactRepository.findAllByEmployeeId(employeeRequest.getId());
+
+        for (int i = 0; i < kpiFacts.size(); i++){
+            kpiFacts.get(i).setValue(employeeRequest.getKpiFacts().get(i).getValue());
+            kpiFactRepository.saveAndFlush(kpiFacts.get(i));
+        }
         jobRole.ifPresent(employee::setJobRole);
+
         employeeService.updateEmployee(employee);
     }
 
     @PutMapping("/role")
     @ResponseStatus(HttpStatus.OK)
-    public void updateEmployee(@RequestBody RequestRoleDto requestRoleDto
+    public void updateRole(@RequestBody RequestRoleDto requestRoleDto
     ) throws BadRequestException {
         JobRole role = JobRole.builder()
                         .id(requestRoleDto.getId())

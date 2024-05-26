@@ -1,10 +1,12 @@
 package kz.olzhas.employeeserver.service.impl;
 
 
+import kz.olzhas.employeeserver.model.employee.Employee;
 import kz.olzhas.employeeserver.model.kpi.KpiStandard;
 import kz.olzhas.employeeserver.repository.kpi.KpiStandardRepository;
 import kz.olzhas.employeeserver.service.KpiStandardService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,18 @@ public class KpiStandardServiceImpl implements KpiStandardService {
     @Override
     public List<KpiStandard> getAll() {
         return kpiStandardRepository.findAll();
+    }
+
+    @Override
+    public void updateKPI(KpiStandard kpiStandard) throws BadRequestException {
+        Optional<KpiStandard> KpiStandard = kpiStandardRepository.findById(kpiStandard.getId());
+
+        KpiStandard existingKpi = KpiStandard.orElseThrow(() -> new BadRequestException("Job role not found"));
+        existingKpi.setValue(kpiStandard.getValue());
+        existingKpi.setName(kpiStandard.getName());
+        existingKpi.setJobRole(kpiStandard.getJobRole());
+
+        kpiStandardRepository.save(existingKpi);
     }
 
     @Override

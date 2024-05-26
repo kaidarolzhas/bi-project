@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KpiStandardDto {
+    private long id;
     private String name;
     private Double value;
     private Double percent;
