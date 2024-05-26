@@ -1,7 +1,17 @@
 spring:
   application:
     name: IDENTITY-SERVICE
-
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://docs.spring.io"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
 eureka:
   client:
     service-url:
