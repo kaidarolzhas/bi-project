@@ -11,12 +11,11 @@ import java.util.Optional;
 public interface JobRoleService {
     void deleteRole(Long id);
 
-    List<ResponseRoleDto> getAll();
-    Optional<JobRole> getByRole(String role);
+    List<ResponseRoleDto> getAll(Long resId);
+    Optional<JobRole> getByRole(String role, Long id);
 
-     void createRoles(RequestRoleDto requestRoleDto);
+     void createRoles(RequestRoleDto requestRoleDto, Long resId);
 
     void updateRole(JobRole role) throws BadRequestException;
-    Optional<JobRole> getJob(String role);
     Optional<JobRole> getRole(Long id);
 }

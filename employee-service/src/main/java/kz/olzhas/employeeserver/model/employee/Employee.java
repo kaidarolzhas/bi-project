@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kz.olzhas.employeeserver.model.kpi.KPIFact;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,12 +29,15 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "restaurant_id")
+    private Long restaurantId;
+
     @ManyToOne()
     @JoinColumn(name = "role_id")
     private JobRole jobRole;
 
     @Column(name = "date_of_start")
-    private Date dateOfStart;
+    private LocalDate dateOfStart;
 
     @Column(name = "kpi_month")
     private Double kpiMonth;

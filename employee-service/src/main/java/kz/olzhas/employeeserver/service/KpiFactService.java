@@ -17,4 +17,6 @@ public interface KpiFactService {
 
     void setKpiMonth(EmployeeRequest employeeRequest);
     void setKpiWeak(EmployeeRequest employeeRequest);
+    Double getKpiMonthAll(Employee employee);
+    void setKpiMonthAll(Long resId);
 }

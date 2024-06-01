@@ -1,0 +1,15 @@
+kz/olzhas/IdentityServiceApplication.class
+kz/olzhas/service/AuthService.class
+kz/olzhas/config/CustomUserDetails.class
+kz/olzhas/service/JwtService.class
+kz/olzhas/repository/UserCredentialRepository.class
+kz/olzhas/config/AuthConfig.class
+kz/olzhas/mapper/UserMapperImpl.class
+kz/olzhas/config/WebMvcConfig.class
+kz/olzhas/mapper/UserMapper.class
+kz/olzhas/mapper/Mappable.class
+kz/olzhas/dto/UserDto.class
+kz/olzhas/config/CustomUserDetailsService.class
+kz/olzhas/dto/AuthRequest.class
+kz/olzhas/entity/UserCredential.class
+kz/olzhas/controller/AuthController.class

@@ -1,0 +1,14 @@
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/mapper/Mappable.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/dto/UserDto.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/controller/AuthController.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/repository/UserCredentialRepository.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/dto/AuthRequest.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/service/JwtService.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/config/AuthConfig.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/entity/UserCredential.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/mapper/UserMapper.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/service/AuthService.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/config/WebMvcConfig.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/config/CustomUserDetails.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/IdentityServiceApplication.java
+/Users/olzhaskaidar/Desktop/pet-project/bi-project-microservices/identity-service/src/main/java/kz/olzhas/config/CustomUserDetailsService.java

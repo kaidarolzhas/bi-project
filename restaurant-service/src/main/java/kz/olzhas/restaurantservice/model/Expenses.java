@@ -2,13 +2,12 @@ package kz.olzhas.restaurantservice.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "t_expenses")
+@Builder
 public class Expenses {
 
     @Id
@@ -28,20 +28,19 @@ public class Expenses {
     @Column(name = "rent")
     private BigDecimal rent;
 
-    @Column(name = "revenue")
-    private BigDecimal revenue;
+    @OneToMany(mappedBy = "expenses", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Salary> salaryList;
 
-    @Column(name = "profit")
-    private BigDecimal profit;
+    @OneToMany(mappedBy = "expenses", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CustomExpenses> customExpenses;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "salary_id")
-    private Salary salary;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "custom_id")
-    private CustomExpenses customExpenses;
-
-    @Column(name = "date")
-    private Date theDate;
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 }

@@ -9,26 +9,36 @@ import kz.olzhas.restaurantservice.repository.RestaurantRepository;
 import kz.olzhas.restaurantservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/restaurant")
 @RequiredArgsConstructor
 public class RestaurantController {
-    private final RestaurantResponseMapper restaurantResponseMapper;
-    private final RestaurantRequestMapper restaurantRequestMapper;
     private final RestaurantService restaurantService;
+
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public RestaurantResponce getRestaurant(@PathVariable Long id) throws BadRequestException {
-        return restaurantResponseMapper.toDto(restaurantService.getRestaurant(id));
+    public ResponseEntity<?> getRestaurantId(@PathVariable Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        return ResponseEntity.ok(restaurantService.findById(id, token));
     }
 
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createRestaurant(@RequestBody RestaurantRequest restaurantRequest){
-        Restaurant restaurant = restaurantRequestMapper.toEntity(restaurantRequest);
-        restaurantService.createRestaurant(restaurant);
+    @PostMapping
+    public void createRestaurant(@RequestBody RestaurantRequest restaurantRequest,
+                             @RequestParam("token") String token) {
+        restaurantService.save(token, restaurantRequest);
     }
+
+    @PutMapping("/{id}")
+    public void updateRestaurant(@PathVariable Long id, @RequestBody RestaurantRequest restaurantRequest) {
+        restaurantService.update(id, restaurantRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteRestaurant(@PathVariable Long id) {
+        restaurantService.deleteById(id);
+    }
+
 }

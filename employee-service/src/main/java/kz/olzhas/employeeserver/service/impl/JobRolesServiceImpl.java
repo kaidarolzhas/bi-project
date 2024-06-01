@@ -2,6 +2,7 @@ package kz.olzhas.employeeserver.service.impl;
 
 import kz.olzhas.employeeserver.dto.employee.RequestRoleDto;
 import kz.olzhas.employeeserver.dto.employee.ResponseRoleDto;
+import kz.olzhas.employeeserver.mapper.employee.ResponseRoleMapper;
 import kz.olzhas.employeeserver.model.employee.Employee;
 import kz.olzhas.employeeserver.model.employee.JobRole;
 import kz.olzhas.employeeserver.repository.employee.EmployeeRepository;
@@ -21,6 +22,7 @@ public class JobRolesServiceImpl implements JobRoleService {
 
     private final JobRoleRepository jobRoleRepository;
     private final EmployeeRepository employeeRepository;
+    private final ResponseRoleMapper responseRoleDtoMapper;
 
     @Override
     public void deleteRole(Long id) {
@@ -36,24 +38,22 @@ public class JobRolesServiceImpl implements JobRoleService {
         }
     }
 
-    public List<ResponseRoleDto> getAll() {
-        List<JobRole> list = jobRoleRepository.findAll();
-        List<ResponseRoleDto> responseRoleDtos = new ArrayList<>();
-        for (JobRole jobRole : list) {
-            responseRoleDtos.add(new ResponseRoleDto(jobRole.getRole()));
-        }
-        return responseRoleDtos;
+    public List<ResponseRoleDto> getAll(Long resId) {
+        return responseRoleDtoMapper.toDtoList(jobRoleRepository.findAllByRestaurantId(resId));
     }
 
     @Override
-    public Optional<JobRole> getByRole(String role) {
-        return jobRoleRepository.findByRole(role);
+    public Optional<JobRole> getByRole(String role, Long id) {
+        return jobRoleRepository.findByRoleAndRestaurantId(role, id);
     }
 
     @Override
-    public void createRoles(RequestRoleDto requestRoleDto) {
+    public void createRoles(RequestRoleDto requestRoleDto, Long resId) {
         JobRole jobRole = JobRole.builder()
                 .role(requestRoleDto.getRole().toUpperCase())
+                .bonus(requestRoleDto.getBonus())
+                .oklad(requestRoleDto.getOklad())
+                .restaurantId(resId)
                 .build();
 
         jobRoleRepository.save(jobRole);
@@ -62,15 +62,9 @@ public class JobRolesServiceImpl implements JobRoleService {
     @Override
     public void updateRole(JobRole role) throws BadRequestException {
         Optional<JobRole> jobRole = jobRoleRepository.findById(role.getId());
-
         JobRole existingRole = jobRole.orElseThrow(() -> new BadRequestException("Job role not found"));
         existingRole.setRole(role.getRole());
         jobRoleRepository.save(jobRole.get());
-    }
-
-    @Override
-    public Optional<JobRole> getJob(String role) {
-        return jobRoleRepository.findByRole(role);
     }
 
     @Override

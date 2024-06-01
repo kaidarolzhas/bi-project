@@ -37,23 +37,29 @@ public class KpiController {
         return kpiStandardMapper.toDtoList(kpiStandardService.getAll());
     }
 
-    @PutMapping()
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateKpiStandard(@RequestBody KpiStandardDto kpiStandardDto
+    public void deleteKpi(@PathVariable("id") Long id) {
+        kpiStandardService.deleteKpi(id);
+    }
+
+    @PutMapping("/{resId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateKpiStandard(@RequestBody KpiStandardDto kpiStandardDto, @PathVariable("resId") Long resId
     ) throws BadRequestException {
         KpiStandard kpiStandard = kpiStandardMapper.toEntity(kpiStandardDto);
-        Optional<JobRole> jobRole = jobRoleService.getByRole(kpiStandardDto.getRole().getRole());
+        Optional<JobRole> jobRole = jobRoleService.getByRole(kpiStandardDto.getJobRole().getRole(), resId);
         if(jobRole.isPresent()){
             kpiStandard.setJobRole(jobRole.get());
             kpiStandardService.updateKPI(kpiStandard);
         };
     }
 
-    @PostMapping()
+    @PostMapping("/{resId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpStatus createKpi(@RequestBody KpiStandardDto kpiStandardDto) {
+    public HttpStatus createKpi(@RequestBody KpiStandardDto kpiStandardDto, @PathVariable("resId") Long resId) throws BadRequestException {
         KpiStandard kpiStandard = kpiStandardMapper.toEntity(kpiStandardDto);
-        return kpiStandardService.save(kpiStandard) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return kpiStandardService.save(kpiStandard, resId) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
     }
 
 //    @PostMapping("/update/kpi/weak")
@@ -64,8 +70,14 @@ public class KpiController {
 
     @PostMapping("/update/kpi/month")
     @ResponseStatus(HttpStatus.OK)
-    public void getKpiMonth(@RequestBody EmployeeRequest employeeRequest){
+    public void setKpiMonth(@RequestBody EmployeeRequest employeeRequest){
         kpiFactService.setKpiMonth(employeeRequest);
+    }
+
+    @PostMapping("/update/kpi/all-month/{resId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void setKpiAll(@PathVariable("resId") Long resId){
+        kpiFactService.setKpiMonthAll(resId);
     }
 
 }

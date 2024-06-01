@@ -17,3 +17,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
+feign:
+  auth-service: http://localhost:9898/auth
+  employee-service: http://localhost:8089/api/employee

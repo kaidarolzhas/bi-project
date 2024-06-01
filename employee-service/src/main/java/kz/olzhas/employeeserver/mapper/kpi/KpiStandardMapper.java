@@ -7,13 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface KpiStandardMapper extends Mappable<KpiStandard, KpiStandardDto> {
-    KpiStandardMapper INSTANCE = Mappers.getMapper(KpiStandardMapper.class);
-
-    @Mapping(source = "jobRole", target = "role")
-    KpiStandardDto toDto(KpiStandard entity);
-
-    @Mapping(source = "role", target = "jobRole")
-    KpiStandard toEntity(KpiStandardDto dto);
 }

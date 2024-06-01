@@ -4,6 +4,7 @@ import kz.olzhas.dto.AuthRequest;
 import kz.olzhas.entity.UserCredential;
 import kz.olzhas.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,5 +36,14 @@ public class AuthController {
     public String validateToken(@RequestParam("token") String token) {
         service.validateToken(token);
         return "Token is valid";
+    }
+    @GetMapping("/token-user")
+    public ResponseEntity<?> getUserByToken(@RequestParam("token") String token) {
+        return ResponseEntity.ok(service.getUserIdByToken(token));
+    }
+
+    @GetMapping("/by-us erId")
+    public ResponseEntity<?> getUserByUserId(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(service.getUserByUserId(userId));
     }
 }

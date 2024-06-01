@@ -1,10 +1,7 @@
 package kz.olzhas.restaurantservice.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "t_custom_expenses")
 @Entity
+@Builder
 public class CustomExpenses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,4 +27,8 @@ public class CustomExpenses {
 
     @Column(name = "date")
     private Date theDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expenses_id")
+    private Expenses expenses;
 }

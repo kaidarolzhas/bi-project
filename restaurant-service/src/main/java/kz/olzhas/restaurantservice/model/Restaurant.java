@@ -1,10 +1,7 @@
 package kz.olzhas.restaurantservice.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -14,6 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "t_restaurant")
+@Builder
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +23,9 @@ public class Restaurant {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
+
     @Column(name = "city")
     private String city;
 
@@ -34,9 +35,10 @@ public class Restaurant {
     @Column(name = "profit")
     private BigDecimal profit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expenses_id")
-    private Expenses expenses;
+    @Column(name = "owner_id")
+    private Long ownerId;
 
+    @Column(name = "expenses")
+    private BigDecimal expenses;
 
 }

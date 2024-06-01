@@ -26,7 +26,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeRequestMapper employeeRequestMapper;
-    private final EmployeeResponseMapper employeeResponseMapper;
     private final KpiFactRepository kpiFactRepository;
     private final EmployeeService employeeService;
     private final JobRoleService jobRoleService;
@@ -42,15 +41,15 @@ public class EmployeeController {
         return employeeRequest;
     }
 
-    @PostMapping()
+    @PostMapping("/{resId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createEmployee(@RequestBody EmployeeRequest employeeRequest) throws BadRequestException {
-        employeeService.createEmployee(employeeRequest);
+    public void createEmployee(@RequestBody EmployeeRequest employeeRequest, @PathVariable Long resId) throws BadRequestException {
+        employeeService.createEmployee(employeeRequest,resId);
     }
-    @PostMapping("/role")
+    @PostMapping("/role/{resId}")
     @ResponseStatus(HttpStatus.OK)
-    public void createRole(@RequestBody RequestRoleDto requestRoleDto) throws BadRequestException {
-        jobRoleService.createRoles(requestRoleDto);
+    public void createRole(@RequestBody RequestRoleDto requestRoleDto, @PathVariable Long resId) throws BadRequestException {
+        jobRoleService.createRoles(requestRoleDto, resId);
     }
 
     @PutMapping()
@@ -58,14 +57,14 @@ public class EmployeeController {
     public void updateEmployee(@RequestBody EmployeeRequest employeeRequest
     ) throws BadRequestException {
         Employee employee = employeeRequestMapper.toEntity(employeeRequest);
-        Optional<JobRole> jobRole = jobRoleService.getByRole(employeeRequest.getRole());
+        Optional<JobRole> jobRole = jobRoleService.getByRole(employeeRequest.getJobRole().getRole(), employeeRequest.getRestaurantId());
         List<KPIFact> kpiFacts = kpiFactRepository.findAllByEmployeeId(employeeRequest.getId());
-
+        JobRole exJobRole = jobRole.orElseThrow(() -> new BadRequestException("Job role not found"));
         for (int i = 0; i < kpiFacts.size(); i++){
             kpiFacts.get(i).setValue(employeeRequest.getKpiFacts().get(i).getValue());
             kpiFactRepository.saveAndFlush(kpiFacts.get(i));
         }
-        jobRole.ifPresent(employee::setJobRole);
+        employee.setJobRole(exJobRole);
 
         employeeService.updateEmployee(employee);
     }
@@ -77,6 +76,9 @@ public class EmployeeController {
         JobRole role = JobRole.builder()
                         .id(requestRoleDto.getId())
                                 .role(requestRoleDto.getRole())
+                .oklad(requestRoleDto.getOklad())
+                .bonus(requestRoleDto.getBonus())
+                .restaurantId(requestRoleDto.getRestaurantId())
                                         .build();
         jobRoleService.updateRole(role);
 
@@ -88,17 +90,17 @@ public class EmployeeController {
         return employeeService.deleteEmployee(id);
     }
 
-    @GetMapping()
+    @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeRequest> getEmployees() throws BadRequestException {
-        List<Employee> employees =  employeeService.getEmployees();
+    public List<EmployeeRequest> getEmployees(@RequestParam("resId") Long resId) throws BadRequestException {
+        List<Employee> employees =  employeeService.getEmployees(resId);
         List<EmployeeRequest> employeesRequestList =  employeeRequestMapper.toDtoList(employees);
         for(Employee employee: employees){
             for(EmployeeRequest request:employeesRequestList ) {
                 Optional<JobRole> jobRole = jobRoleService.getRole(employee.getJobRole().getId());
                 List<KPIFact> kpiFacts = kpiFactService.kpiFactsByUserId(request.getId());
                 request.setKpiFacts(kpiFacts);
-                jobRole.ifPresent(role -> request.setRole(role.getRole()));
+                jobRole.ifPresent(request::setJobRole);
             }
         };
         return employeesRequestList;
@@ -106,9 +108,8 @@ public class EmployeeController {
 
     @GetMapping("/getRoles")
     @ResponseStatus(HttpStatus.OK)
-    public List<ResponseRoleDto> getRoles() {
-        List<ResponseRoleDto> responseRoleDtos = jobRoleService.getAll();
-        return responseRoleDtos;
+    public List<ResponseRoleDto> getRoles(@RequestParam("resId") Long resId) {
+        return jobRoleService.getAll(resId);
     }
 
     @DeleteMapping("/role/{id}")

@@ -38,7 +38,7 @@ public class KpiFactServiceImpl implements KpiFactService {
 
     @Override
     public Double getKpiMonth(EmployeeRequest employeeRequest) {
-        String role = employeeRequest.getRole();
+        String role = employeeRequest.getJobRole().getRole();
         List<KpiStandard> kpiStandardList = kpiStandardService.getAllByRole(role);
         List<KPIFact> kpiFactList = kpiFactRepository.findAllByEmployeeId(employeeRequest.getId());
         double sum = 0;
@@ -54,8 +54,25 @@ public class KpiFactServiceImpl implements KpiFactService {
     }
 
     @Override
+    public Double getKpiMonthAll(Employee employee) {
+        String role = employee.getJobRole().getRole();
+        List<KpiStandard> kpiStandardList = kpiStandardService.getAllByRole(role);
+        List<KPIFact> kpiFactList = kpiFactRepository.findAllByEmployeeId(employee.getId());
+        double sum = 0;
+        //(fact/norm)*percent
+        for (KpiStandard kpiStandard : kpiStandardList){
+            for (KPIFact kpiFact : kpiFactList){
+                if(Objects.equals(kpiFact.getName(), kpiStandard.getName())){
+                    sum += (kpiFact.getValue()/kpiStandard.getValue())* kpiStandard.getPercent();
+                }
+            }
+        }
+        return sum;
+    }
+
+    @Override
     public Double getKpiWeak(EmployeeRequest employeeRequest) {
-        String role = employeeRequest.getRole();
+        String role = employeeRequest.getJobRole().getRole();
         List<KpiStandard> kpiStandardList = getKpiStandardWeak(role);
         List<KPIFact> kpiFactList = kpiFactRepository.findAllByEmployeeId(employeeRequest.getId());
         double sum = 0;
@@ -85,6 +102,15 @@ public class KpiFactServiceImpl implements KpiFactService {
         if(employee.isPresent()){
             employee.get().setKpiMonth(getKpiMonth(employeeRequest));
             employeeRepository.saveAndFlush(employee.get());
+        }
+    }
+
+    @Override
+    public void setKpiMonthAll(Long resId) {
+        List<Employee> employeeList = employeeRepository.findAllByRestaurantId(resId);
+        for (Employee employee :employeeList){
+            employee.setKpiMonth(getKpiMonthAll(employee));
+            employeeRepository.saveAndFlush(employee);
         }
     }
 

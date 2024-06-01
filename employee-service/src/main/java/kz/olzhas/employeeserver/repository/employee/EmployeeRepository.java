@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByJobRoleId(Long id);
+    List<Employee> findAllByRestaurantId(Long resId);
+
+    boolean existsByEmail(String email);
 }

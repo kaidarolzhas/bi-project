@@ -22,4 +22,13 @@ public class JobRole {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "restaurant_id")
+    private Long restaurantId;
+
+    @Column(name = "oklad")
+    private Double oklad;
+
+    @Column(name = "bonus")
+    private Double bonus;
+
 }

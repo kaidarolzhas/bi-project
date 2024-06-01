@@ -14,5 +14,5 @@ public class KpiStandardDto {
     private String name;
     private Double value;
     private Double percent;
-    private JobRole role;
+    private JobRole jobRole;
 }

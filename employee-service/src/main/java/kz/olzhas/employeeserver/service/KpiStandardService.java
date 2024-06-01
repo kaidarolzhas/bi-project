@@ -11,7 +11,9 @@ public interface KpiStandardService {
 
     List<KpiStandard> getAll();
 
-    boolean save(KpiStandard kpiStandard);
+    boolean save(KpiStandard kpiStandard, Long resId) throws BadRequestException;
 
     void updateKPI(KpiStandard kpiStandard) throws BadRequestException;
+
+    void deleteKpi(Long id);
 }

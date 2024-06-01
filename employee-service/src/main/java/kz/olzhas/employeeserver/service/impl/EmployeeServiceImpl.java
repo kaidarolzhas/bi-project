@@ -37,21 +37,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void createEmployee(EmployeeRequest employeeRequest) throws BadRequestException {
-        Optional<JobRole> jobRole = jobRoleRepository.findByRole(employeeRequest.getRole().toUpperCase());
-        JobRole actualJobRole = jobRole.orElseThrow(() -> new BadRequestException("Job role not found"));
+    public void createEmployee(EmployeeRequest employeeRequest, Long resId) throws BadRequestException {
+        if (employeeRepository.existsByEmail(employeeRequest.getEmail())) {
+            throw new BadRequestException("User with this email already exists");
+        }
+
+        Optional<JobRole> jobRole = jobRoleRepository.findByRoleAndRestaurantId(employeeRequest.getJobRole().getRole().toUpperCase(), resId);
+        if (jobRole.isEmpty()) {
+            throw new BadRequestException("Roles dont exist");
+        }
         Employee employee = Employee.builder()
                 .firstName(employeeRequest.getFirstName())
                 .lastName(employeeRequest.getLastName())
                 .email(employeeRequest.getEmail())
-                .jobRole(actualJobRole)
+                .jobRole(jobRole.get())
                 .dateOfStart(employeeRequest.getDateOfStart())
+                .restaurantId(resId)
                 .build();
 
         employeeRepository.save(employee);
-        List<KpiStandard> kpiStandards = kpiStandardRepository.findAllByJobRoleRole(employeeRequest.getRole());
+
+        List<KpiStandard> kpiStandards = kpiStandardRepository.findAllByJobRole(jobRole.get());
         List<KPIFact> kpiFacts = new ArrayList<>();
-        if(!kpiStandards.isEmpty()) {
+        if (!kpiStandards.isEmpty()) {
             for (KpiStandard kpiStandard : kpiStandards) {
                 kpiFacts.add(
                         KPIFact.builder()
@@ -59,26 +67,27 @@ public class EmployeeServiceImpl implements EmployeeService {
                                 .name(kpiStandard.getName())
                                 .percent(kpiStandard.getPercent())
                                 .build()
-
                 );
             }
         }
         kpiFactRepository.saveAll(kpiFacts);
     }
 
+
     @Override
-    public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
+    public List<Employee> getEmployees(Long resId) {
+        return employeeRepository.findAllByRestaurantId(resId);
     }
 
     @Override
     public void updateEmployee(Employee newEmployee) throws BadRequestException {
         Optional<Employee> employee = employeeRepository.findById(newEmployee.getId());
-
+        Optional<JobRole> jobRole = jobRoleRepository.findByRoleAndRestaurantId(newEmployee.getJobRole().getRole(), newEmployee.getRestaurantId());
         Employee existingEmployee = employee.orElseThrow(() -> new BadRequestException("Job role not found"));
+        JobRole exJobRole = jobRole.orElseThrow(() -> new BadRequestException("Job role not found"));
         existingEmployee.setFirstName(newEmployee.getFirstName());
         existingEmployee.setLastName(newEmployee.getLastName());
-        existingEmployee.setJobRole(newEmployee.getJobRole());
+        existingEmployee.setJobRole(exJobRole);
         existingEmployee.setDateOfStart(newEmployee.getDateOfStart());
 
         employeeRepository.save(existingEmployee);

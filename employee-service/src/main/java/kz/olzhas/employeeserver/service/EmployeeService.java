@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface EmployeeService {
     Employee getEmployee(Long id) throws BadRequestException;
-    void createEmployee(EmployeeRequest employeeRequest) throws BadRequestException;
+    void createEmployee(EmployeeRequest employeeRequest, Long resId) throws BadRequestException;
 
-    List<Employee> getEmployees();
+    List<Employee> getEmployees(Long resId);
 
     void updateEmployee(Employee employee) throws BadRequestException;
     boolean deleteEmployee(Long id);

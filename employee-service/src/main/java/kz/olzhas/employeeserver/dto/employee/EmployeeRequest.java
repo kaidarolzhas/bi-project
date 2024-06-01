@@ -1,8 +1,10 @@
 package kz.olzhas.employeeserver.dto.employee;
 
+import kz.olzhas.employeeserver.model.employee.JobRole;
 import kz.olzhas.employeeserver.model.kpi.KPIFact;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,14 +23,15 @@ public class EmployeeRequest {
 
     private String email;
 
-    private String role;
+    private Long restaurantId;
 
-    private Date dateOfStart;
+    private JobRole jobRole;
+
+    private LocalDate dateOfStart;
 
     private List<KPIFact> kpiFacts;
 
     private Double kpiMonth;
 
-    private Double kpiWeak;
 
 }

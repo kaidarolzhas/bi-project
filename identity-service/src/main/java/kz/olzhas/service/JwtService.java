@@ -25,7 +25,10 @@ public class JwtService {
     public void validateToken(final String token) {
         Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
     }
-
+    public String decodeToken(final String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
+        return claims.getSubject(); // Получаем email из токена
+    }
 
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();

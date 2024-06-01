@@ -2,8 +2,11 @@ package kz.olzhas.employeeserver.service.impl;
 
 
 import kz.olzhas.employeeserver.model.employee.Employee;
+import kz.olzhas.employeeserver.model.employee.JobRole;
+import kz.olzhas.employeeserver.model.kpi.KPIFact;
 import kz.olzhas.employeeserver.model.kpi.KpiStandard;
 import kz.olzhas.employeeserver.repository.kpi.KpiStandardRepository;
+import kz.olzhas.employeeserver.service.JobRoleService;
 import kz.olzhas.employeeserver.service.KpiStandardService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -16,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class KpiStandardServiceImpl implements KpiStandardService {
     private final KpiStandardRepository kpiStandardRepository;
-
+    private final JobRoleService jobRoleService;
 
     @Override
     public List<KpiStandard> getAllByRole(String job) {
@@ -41,8 +44,15 @@ public class KpiStandardServiceImpl implements KpiStandardService {
     }
 
     @Override
-    public boolean save(KpiStandard kpiStandard) {
-        List<KpiStandard> kpiStandardCheck = kpiStandardRepository.findAllByJobRoleId(kpiStandard.getJobRole().getId());
+    public void deleteKpi(Long id) {
+        kpiStandardRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean save(KpiStandard kpiStandard, Long resId) throws BadRequestException {
+        Optional<JobRole> jobRole = jobRoleService.getByRole(kpiStandard.getJobRole().getRole(), resId);
+        JobRole exJobRole = jobRole.orElseThrow(() -> new BadRequestException("Job role not found"));
+        List<KpiStandard> kpiStandardCheck = kpiStandardRepository.findAllByJobRoleId(exJobRole.getId());
         Double sum = 0.0;
         for(KpiStandard kpiStandard1 :kpiStandardCheck){
             sum+=kpiStandard1.getPercent();
