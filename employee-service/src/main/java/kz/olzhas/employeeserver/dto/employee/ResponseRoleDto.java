@@ -23,7 +23,6 @@ public class ResponseRoleDto {
 
     private String role;
 
-
     private Long restaurantId;
 
     private Double oklad;

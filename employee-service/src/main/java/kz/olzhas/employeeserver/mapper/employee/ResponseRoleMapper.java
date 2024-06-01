@@ -16,6 +16,7 @@ public class ResponseRoleMapper implements Mappable<JobRole, ResponseRoleDto> {
     @Override
     public JobRole toEntity(ResponseRoleDto dto) {
         return JobRole.builder()
+                .id(dto.getId())
                 .role(dto.getRole())
                 .oklad(dto.getOklad())
                 .bonus(dto.getBonus())
@@ -26,6 +27,7 @@ public class ResponseRoleMapper implements Mappable<JobRole, ResponseRoleDto> {
     @Override
     public ResponseRoleDto toDto(JobRole entity) {
         return ResponseRoleDto.builder()
+                .id(entity.getId())
                 .role(entity.getRole())
                 .oklad(entity.getOklad())
                 .bonus(entity.getBonus())
