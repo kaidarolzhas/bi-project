@@ -4,10 +4,7 @@ package kz.olzhas.employeeserver.model.kpi;
 import jakarta.persistence.*;
 import kz.olzhas.employeeserver.model.employee.Employee;
 import kz.olzhas.employeeserver.model.employee.JobRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -15,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "t_kpi_standard")
+@Builder
 public class KpiStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
