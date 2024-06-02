@@ -1,4 +1,15 @@
 spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
   config:
     import: optional:file:.env[.properties]
   application:

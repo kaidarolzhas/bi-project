@@ -19,7 +19,7 @@ public class EmployeeRequestMapper implements Mappable<Employee, EmployeeRequest
     @Override
     public Employee toEntity(EmployeeRequest dto) {
         return Employee.builder()
-                .id(dto.getRestaurantId())
+                .id(dto.getId())
                 .email(dto.getEmail())
                 .restaurantId(dto.getRestaurantId())
                 .jobRole(dto.getJobRole())
@@ -32,7 +32,7 @@ public class EmployeeRequestMapper implements Mappable<Employee, EmployeeRequest
     @Override
     public EmployeeRequest toDto(Employee entity) {
         return EmployeeRequest.builder()
-                .id(entity.getRestaurantId())
+                .id(entity.getId())
                 .email(entity.getEmail())
                 .restaurantId(entity.getRestaurantId())
                 .jobRole(entity.getJobRole())
