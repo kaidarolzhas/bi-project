@@ -62,6 +62,8 @@ public class EmployeeController {
         JobRole exJobRole = jobRole.orElseThrow(() -> new BadRequestException("Job role not found"));
         for (int i = 0; i < kpiFacts.size(); i++){
             kpiFacts.get(i).setValue(employeeRequest.getKpiFacts().get(i).getValue());
+            kpiFacts.get(i).setMonth(employeeRequest.getKpiFacts().get(i).getMonth());
+            kpiFacts.get(i).setYear(employeeRequest.getKpiFacts().get(i).getYear());
             kpiFactRepository.saveAndFlush(kpiFacts.get(i));
         }
         employee.setJobRole(exJobRole);

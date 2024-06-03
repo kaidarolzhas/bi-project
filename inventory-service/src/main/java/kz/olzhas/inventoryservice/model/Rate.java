@@ -21,18 +21,6 @@ public class Rate {
     @Column(name = "order_name")
     private String name;
 
-    @Column(name = "adress")
-    private double price;
-
-    @Column(name = "total_price")
-    private double totalPrice;
-
-    @Column(name = "total_count")
-    private int totalCount;
-
-    @Column(name = "days_late")
-    private int daysLate;
-
     @Column(name = "rate")
     private double rate;
 

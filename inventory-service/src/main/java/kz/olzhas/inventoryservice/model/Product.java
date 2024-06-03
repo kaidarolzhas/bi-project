@@ -3,6 +3,7 @@ package kz.olzhas.inventoryservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,14 +27,14 @@ public class Product {
     @Column(name = "count")
     private int count;
 
-    @Column(name = "date_of_start")
-    private Date dateOfStart;
+    @JoinColumn(name = "category")
+    private String category;
 
-    @ManyToOne()
-    @JoinColumn(name = "category_id")
-    private Category category;
 
-    @ManyToOne()
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    @Column(name = "expiration_date")
+    private LocalDate expirationDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 }

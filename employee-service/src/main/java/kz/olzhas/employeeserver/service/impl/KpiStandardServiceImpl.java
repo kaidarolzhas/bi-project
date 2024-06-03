@@ -57,7 +57,7 @@ public class KpiStandardServiceImpl implements KpiStandardService {
         for(KpiStandard kpiStandard1 :kpiStandardCheck){
             sum+=kpiStandard1.getPercent();
         }
-        if(sum>=1){
+        if(sum>1){
             return false;
         }
         else {

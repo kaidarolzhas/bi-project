@@ -10,13 +10,19 @@ import java.util.List;
 public interface KpiFactService {
     List<KPIFact> kpiFactsByUserId(Long userId);
 
-    Double getKpiMonth(EmployeeRequest employeeRequest);
+    Double getKpiMonth(String role, List<KPIFact> kpiFact);
 
     Double getKpiWeak(EmployeeRequest employeeRequest);
     List<KpiStandard> getKpiStandardWeak(String role);
 
     void setKpiMonth(EmployeeRequest employeeRequest);
-    void setKpiWeak(EmployeeRequest employeeRequest);
-    Double getKpiMonthAll(Employee employee);
-    void setKpiMonthAll(Long resId);
+    Double getKpiMonthAll(String role, List<KPIFact> kpiFacts);
+
+        void setKpiMonthAll(Long resId);
+
+    boolean update(KPIFact kpiFact, Long empId);
+    void delete(Long id);
+    List<KPIFact> getKpiByMonthAndYear(String month, String year);
+
+    boolean save(KPIFact kpiFact, Long empId);
 }
