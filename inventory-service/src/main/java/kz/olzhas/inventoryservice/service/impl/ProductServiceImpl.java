@@ -3,7 +3,9 @@ package kz.olzhas.inventoryservice.service.impl;
 import kz.olzhas.inventoryservice.dto.product.ProductDto;
 import kz.olzhas.inventoryservice.mapper.SupplierMapper.ProductMapper;
 import kz.olzhas.inventoryservice.model.Product;
+import kz.olzhas.inventoryservice.model.Supplier;
 import kz.olzhas.inventoryservice.repository.ProductRepository;
+import kz.olzhas.inventoryservice.repository.SupplierRepository;
 import kz.olzhas.inventoryservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,13 +17,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final SupplierRepository supplierRepository;
     private final ProductMapper productMapper;
 
     @Override
-    public void save(ProductDto productDto) {
+    public void save(Long supId, ProductDto productDto) {
         Product product = productMapper.toEntity(productDto);
         if (!productRepository.existsById(product.getId())) {
-            productRepository.saveAndFlush(product);
+            Optional<Supplier> supplier = supplierRepository.findById(supId);
+            if(supplier.isPresent()){
+                product.setSupplier(supplier.get());
+                productRepository.saveAndFlush(product);
+            }
+
         }
     }
 
@@ -33,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
             product.get().setCount(productDto.getCount());
             product.get().setPrice(productDto.getPrice());
             product.get().setName(productDto.getName());
-            product.get().setOrder(productDto.getOrder());
+            product.get().setSupplier(productDto.getSupplier());
             product.get().setExpirationDate(productDto.getExpirationDate());
             productRepository.saveAndFlush(product.get());
         }

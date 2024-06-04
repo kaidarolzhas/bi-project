@@ -17,7 +17,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public void createProduct(@RequestBody OrderDto orderDto) {
+    public void cre (@RequestBody OrderDto orderDto) {
         orderService.save(orderDto);
     }
     @GetMapping

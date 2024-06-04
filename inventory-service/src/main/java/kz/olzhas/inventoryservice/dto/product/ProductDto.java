@@ -29,4 +29,5 @@ public class ProductDto {
     private LocalDate expirationDate;
 
     private Order order;
+    private Supplier supplier;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -35,5 +36,8 @@ public class Supplier {
 
     @Column(name = "address")
     private String address;
+
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> productList;
 
 }

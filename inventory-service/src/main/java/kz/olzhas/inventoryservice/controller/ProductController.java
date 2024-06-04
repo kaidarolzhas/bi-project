@@ -14,9 +14,9 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping
-    public void createProduct(@RequestBody ProductDto productDto) {
-        productService.save(productDto);
+    @PostMapping("/{supId}")
+    public void createProduct(@PathVariable("supId") Long supId,@RequestBody ProductDto productDto) {
+        productService.save(supId,productDto);
     }
     @GetMapping
     public List<ProductDto> getAll() {

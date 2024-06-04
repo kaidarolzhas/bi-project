@@ -6,6 +6,7 @@ import kz.olzhas.inventoryservice.model.Product;
 import kz.olzhas.inventoryservice.model.Supplier;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +27,7 @@ public class OrderDto {
 
     private int totalCount;
 
-    private Date deliver;
-
-    private Date arrive;
+    private LocalDate arrive;
 
      private Supplier supplier;
 

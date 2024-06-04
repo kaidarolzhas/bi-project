@@ -34,7 +34,11 @@ public class Product {
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "suplier_id")
+    private Supplier supplier;
+
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 }

@@ -25,9 +25,7 @@ public class OrderMapper implements Mappable<Order, OrderDto> {
                 .price(dto.getPrice())
                 .totalPrice(dto.getTotalPrice())
                 .totalCount(dto.getTotalCount())
-                .deliver(dto.getDeliver())
                 .arrive(dto.getArrive())
-                .supplier(dto.getSupplier())
                 .productList(dto.getProductList())
                 .build();
     }
@@ -44,9 +42,7 @@ public class OrderMapper implements Mappable<Order, OrderDto> {
                 .price(entity.getPrice())
                 .totalPrice(entity.getTotalPrice())
                 .totalCount(entity.getTotalCount())
-                .deliver(entity.getDeliver())
                 .arrive(entity.getArrive())
-                .supplier(entity.getSupplier())
                 .productList(entity.getProductList())
                 .build();
 

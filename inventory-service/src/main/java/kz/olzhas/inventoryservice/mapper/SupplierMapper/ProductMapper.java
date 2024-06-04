@@ -18,7 +18,6 @@ public class ProductMapper implements Mappable<Product, ProductDto> {
                 .category(dto.getCategory())
                 .count(dto.getCount())
                 .expirationDate(dto.getExpirationDate())
-                .order(dto.getOrder())
                 .price(dto.getPrice())
                 .build();
     }
@@ -30,7 +29,6 @@ public class ProductMapper implements Mappable<Product, ProductDto> {
                 .category(entity.getCategory())
                 .count(entity.getCount())
                 .expirationDate(entity.getExpirationDate())
-                .order(entity.getOrder())
                 .price(entity.getPrice())
                 .build();
     }

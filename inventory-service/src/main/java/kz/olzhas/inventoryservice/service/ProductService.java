@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    void save(ProductDto productDto);
+    void save(Long supId,ProductDto productDto);
 
     void update(Long id, ProductDto productDto);
 
