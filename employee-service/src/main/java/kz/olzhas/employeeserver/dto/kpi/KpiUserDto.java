@@ -11,6 +11,7 @@ public class KpiUserDto {
     private Double kpi;
     private String month;
     private String year;
+    private String username;
 
     public KpiUserDto() {}
 }
