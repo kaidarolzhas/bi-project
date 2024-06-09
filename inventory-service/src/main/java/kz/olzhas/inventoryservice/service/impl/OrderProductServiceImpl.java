@@ -1,7 +1,9 @@
 package kz.olzhas.inventoryservice.service.impl;
 
 import kz.olzhas.inventoryservice.dto.OrderProductDTO;
+import kz.olzhas.inventoryservice.mapper.SupplierMapper.OrderMapper;
 import kz.olzhas.inventoryservice.mapper.SupplierMapper.OrderProductMapper;
+import kz.olzhas.inventoryservice.model.Order;
 import kz.olzhas.inventoryservice.model.OrderProduct;
 import kz.olzhas.inventoryservice.repository.OrderProductRepository;
 import kz.olzhas.inventoryservice.repository.OrderRepository;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class OrderProductServiceImpl implements OrderProductService {
     private final OrderProductRepository orderProductRepository;
     private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
     private final SupplierProductRepository supplierProductRepository;
     private final OrderProductMapper orderProductMapper;
 
@@ -30,19 +33,19 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public void update(Long id, OrderProductDTO orderProductDTO) {
-        Optional<OrderProduct> orderProductOptional = orderProductRepository.findById(id);
-        if (orderProductOptional.isPresent()) {
-            OrderProduct orderProduct = orderProductOptional.get();
-            orderProduct.setCount(orderProductDTO.getCount());
-
-            // Update the order reference
-            orderProduct.setOrder_id(id);
-
-            // Update the supplier product reference
-            orderProduct.setSupplierProduct(supplierProductRepository.findById(orderProductDTO.getSupplierProduct().getId()).orElse(null));
-
-            orderProductRepository.saveAndFlush(orderProduct);
-        }
+//        Optional<OrderProduct> orderProductOptional = orderProductRepository.findById(id);
+//        if (orderProductOptional.isPresent()) {
+//            OrderProduct orderProduct = orderProductOptional.get();
+//            orderProduct.setCount(orderProductDTO.getCount());
+//            Order order = orderMapper.toEntity(orderProductDTO.getOrder());
+//            // Update the order reference
+//            orderProduct.setOrder(order);
+//
+//            // Update the supplier product reference
+//            orderProduct.setSupplierProduct(supplierProductRepository.findById(orderProductDTO.getSupplierProduct().getId()).orElse(null));
+//
+//            orderProductRepository.saveAndFlush(orderProduct);
+//        }
     }
 
     @Override

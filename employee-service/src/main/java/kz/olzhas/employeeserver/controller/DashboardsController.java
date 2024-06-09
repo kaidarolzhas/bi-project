@@ -19,4 +19,9 @@ public class DashboardsController {
     public ResponseEntity<List<KpiUserDto>> getListEmployeeByResId(@PathVariable Long resId) {
         return ResponseEntity.ok(kpiService.getAllByUser(resId));
     }
+
+    @GetMapping("/{resId}/{role}")
+    public ResponseEntity<List<KpiUserDto>> getListEmployeeByRole(@PathVariable("role") Long role,@PathVariable("resId") Long resId) {
+        return ResponseEntity.ok(kpiService.getAllByRole(resId, role));
+    }
 }

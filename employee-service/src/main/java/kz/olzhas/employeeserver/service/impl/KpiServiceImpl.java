@@ -17,4 +17,9 @@ public class KpiServiceImpl implements KpiService {
     public List<KpiUserDto> getAllByUser(Long resId) {
         return kpiRepository.getKpiDataByRestaurantId(resId);
     }
+
+    @Override
+    public List<KpiUserDto> getAllByRole(Long resId, Long role) {
+        return kpiRepository.getKpiDataByRestaurantIdRoleId(resId, role);
+    }
 }

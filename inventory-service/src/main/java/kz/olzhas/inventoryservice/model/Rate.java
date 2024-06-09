@@ -25,6 +25,6 @@ public class Rate {
     private double rate;
 
     @ManyToOne()
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 }

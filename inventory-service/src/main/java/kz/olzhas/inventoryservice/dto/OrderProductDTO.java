@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class OrderProductDTO {
     private Long id;
-    private Long orderId;
+    private Long order_id;
     private SupplierProductDTO supplierProduct;
     private int count;
 }

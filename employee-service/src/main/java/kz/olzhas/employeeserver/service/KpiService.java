@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface KpiService {
     List<KpiUserDto> getAllByUser(Long resId);
+
+    List<KpiUserDto> getAllByRole(Long resId, Long role);
 }
