@@ -38,7 +38,8 @@ import static kz.olzhas.employeeserver.util.EntityHelper.ALL_EMPLOYEE_RES_ID_ROL
                                 @ColumnResult(name = "emlId", type = Long.class),
                                 @ColumnResult(name = "kpi", type = Double.class),
                                 @ColumnResult(name = "month", type = String.class),
-                                @ColumnResult(name = "year", type = String.class)
+                                @ColumnResult(name = "year", type = String.class),
+                                @ColumnResult(name = "username", type = String.class)
                         })})
 @NamedNativeQueries({
         @NamedNativeQuery(name = "Kpi.getKpiDataByRestaurantId",
