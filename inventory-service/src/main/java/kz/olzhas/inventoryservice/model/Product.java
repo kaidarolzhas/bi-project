@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,24 +21,11 @@ public class Product {
     @Column(name = "product_name")
     private String name;
 
-    @Column(name = "price")
-    private double price;
-
-    @Column(name = "count")
-    private int count;
-
-    @JoinColumn(name = "category")
-    private String category;
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private ProductCategory category;
 
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @ManyToOne
-    @JoinColumn(name = "suplier_id")
-    private Supplier supplier;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
 }

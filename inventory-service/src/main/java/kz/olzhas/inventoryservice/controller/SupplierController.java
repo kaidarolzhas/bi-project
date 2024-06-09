@@ -1,8 +1,8 @@
 package kz.olzhas.inventoryservice.controller;
 
 
-import kz.olzhas.inventoryservice.dto.SupplierRequest;
-import kz.olzhas.inventoryservice.mapper.SupplierMapper.SupplierRequestMapper;
+import kz.olzhas.inventoryservice.dto.OrderDto;
+import kz.olzhas.inventoryservice.dto.SupplierDTO;
 import kz.olzhas.inventoryservice.mapper.SupplierMapper.SupplierResponseMapper;
 import kz.olzhas.inventoryservice.model.Supplier;
 import kz.olzhas.inventoryservice.repository.SupplierRepository;
@@ -16,28 +16,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/supplier")
 @RequiredArgsConstructor
-public class MainController {
+public class SupplierController {
 
     private final SupplierService supplierService;
     private final SupplierResponseMapper supplierResponseMapper;
-    private final SupplierRequestMapper supplierRequestMapper;
-    private final SupplierRepository supplierRepository;
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
-    public void createSupplier(@RequestBody SupplierRequest supplierRequest){
-        Supplier supplier = supplierRequestMapper.toEntity(supplierRequest);
+    public void createSupplier(@RequestBody SupplierDTO supplierRequest){
+        Supplier supplier = supplierResponseMapper.toEntity(supplierRequest);
         supplierService.createSupplier(supplier);
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<Supplier> getAllSupplier(){
-        return supplierService.getAllSuppliers();
+    public List<SupplierDTO> getAllSupplier(){
+        return supplierResponseMapper.toDtoList(supplierService.getAllSuppliers());
     }
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateSupplier(@RequestBody SupplierRequest supplierRequest){
-        Supplier supplier = supplierRequestMapper.toEntity(supplierRequest);
+    public void updateSupplier(@RequestBody SupplierDTO supplierDTO){
+        Supplier supplier = supplierResponseMapper.toEntity(supplierDTO);
         supplierService.updateSupplier(supplier);
     }
 
@@ -47,4 +45,8 @@ public class MainController {
         supplierService.deleteSupplier(id);
     }
 
+    @GetMapping("/{id}")
+    public SupplierDTO getSup(@PathVariable Long id) {
+        return supplierService.getById(id);
+    }
 }

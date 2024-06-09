@@ -1,11 +1,9 @@
 package kz.olzhas.inventoryservice.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,8 +24,8 @@ public class Order {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "adress")
-    private double price;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "total_price")
     private double totalPrice;
@@ -38,8 +36,13 @@ public class Order {
     @Column(name = "date_of_arrive")
     private LocalDate arrive;
 
+    @Column(name = "res_id")
+    private Long resId;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> productList;
-
+    private List<OrderProduct> orderProducts;
 }

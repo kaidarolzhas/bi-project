@@ -1,9 +1,10 @@
 package kz.olzhas.inventoryservice.service.impl;
 
+
 import kz.olzhas.inventoryservice.dto.product.ProductDto;
 import kz.olzhas.inventoryservice.mapper.SupplierMapper.ProductMapper;
+import kz.olzhas.inventoryservice.mapper.SupplierMapper.SupplierProductDtoMapper;
 import kz.olzhas.inventoryservice.model.Product;
-import kz.olzhas.inventoryservice.model.Supplier;
 import kz.olzhas.inventoryservice.repository.ProductRepository;
 import kz.olzhas.inventoryservice.repository.SupplierRepository;
 import kz.olzhas.inventoryservice.service.ProductService;
@@ -19,31 +20,24 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final SupplierRepository supplierRepository;
     private final ProductMapper productMapper;
+    private final SupplierProductDtoMapper supplierProductDtoMapper;
 
     @Override
-    public void save(Long supId, ProductDto productDto) {
+    public void save(ProductDto productDto) {
         Product product = productMapper.toEntity(productDto);
-        if (!productRepository.existsById(product.getId())) {
-            Optional<Supplier> supplier = supplierRepository.findById(supId);
-            if(supplier.isPresent()){
-                product.setSupplier(supplier.get());
-                productRepository.saveAndFlush(product);
-            }
-
-        }
+        productRepository.saveAndFlush(product);
     }
 
     @Override
     public void update(Long id, ProductDto productDto) {
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isPresent()) {
-            product.get().setCategory(productDto.getCategory());
-            product.get().setCount(productDto.getCount());
-            product.get().setPrice(productDto.getPrice());
-            product.get().setName(productDto.getName());
-            product.get().setSupplier(productDto.getSupplier());
-            product.get().setExpirationDate(productDto.getExpirationDate());
-            productRepository.saveAndFlush(product.get());
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setName(productDto.getName());
+            product.setCategory(productDto.getCategory());
+            product.setExpirationDate(productDto.getExpirationDate());
+
+            productRepository.saveAndFlush(product);
         }
     }
 
@@ -55,5 +49,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getAll() {
         return productMapper.toDtoList(productRepository.findAll());
+    }
+
+    @Override
+    public ProductDto getById(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        return productOptional.map(productMapper::toDto).orElse(null);
     }
 }

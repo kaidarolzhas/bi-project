@@ -3,17 +3,15 @@ package kz.olzhas.inventoryservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
 import java.util.List;
 
-
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "t_supplier")
 @Builder
-@Entity
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +36,5 @@ public class Supplier {
     private String address;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> productList;
-
+    private List<SupplierProduct> supplierProducts;
 }

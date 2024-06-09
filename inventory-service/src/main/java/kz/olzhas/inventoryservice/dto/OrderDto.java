@@ -1,13 +1,8 @@
 package kz.olzhas.inventoryservice.dto;
 
-
-import jakarta.persistence.*;
-import kz.olzhas.inventoryservice.model.Product;
-import kz.olzhas.inventoryservice.model.Supplier;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,20 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class OrderDto {
-
     private Long id;
-
     private String name;
-
-    private double price;
-
+    private String status;
+    private String address;
     private double totalPrice;
-
     private int totalCount;
-
     private LocalDate arrive;
-
-     private Supplier supplier;
-
-    private List<Product> productList;
+    private Long resId;
+    private List<OrderProductDTO> orderProducts;
 }

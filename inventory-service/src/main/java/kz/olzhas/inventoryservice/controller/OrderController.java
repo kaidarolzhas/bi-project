@@ -2,9 +2,7 @@ package kz.olzhas.inventoryservice.controller;
 
 
 import kz.olzhas.inventoryservice.dto.OrderDto;
-import kz.olzhas.inventoryservice.dto.product.ProductDto;
 import kz.olzhas.inventoryservice.service.OrderService;
-import kz.olzhas.inventoryservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,22 +15,27 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public void cre (@RequestBody OrderDto orderDto) {
+    public void creteOrder(@RequestBody OrderDto orderDto) {
         orderService.save(orderDto);
     }
-    @GetMapping
-    public List<OrderDto> getAll() {
-        return orderService.getAll();
+    @GetMapping("/{resId}")
+    public List<OrderDto> getAll(@PathVariable("resId") Long resId) {
+        return orderService.getAll(resId);
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Long id, @RequestBody OrderDto orderDto) {
+    public void updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
         orderService.update(id, orderDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public void deleteOrder(@PathVariable Long id) {
         orderService.deleteById(id);
+    }
+
+    @GetMapping("/{id}")
+    public OrderDto getOrder(@PathVariable Long id) {
+        return orderService.getById(id);
     }
 
 }

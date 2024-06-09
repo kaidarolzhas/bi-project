@@ -1,12 +1,11 @@
 package kz.olzhas.inventoryservice.dto.product;
 
-import jakarta.persistence.*;
-import kz.olzhas.inventoryservice.model.Order;
-import kz.olzhas.inventoryservice.model.Supplier;
+import kz.olzhas.inventoryservice.dto.product.SupplierProductDTO;
 import lombok.*;
+import kz.olzhas.inventoryservice.model.ProductCategory;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,19 +14,7 @@ import java.util.Date;
 @Builder
 public class ProductDto {
     private Long id;
-
     private String name;
-
-    private double price;
-
-
-    private int count;
-
-    private String category;
-
-
+    private ProductCategory category;
     private LocalDate expirationDate;
-
-    private Order order;
-    private Supplier supplier;
 }

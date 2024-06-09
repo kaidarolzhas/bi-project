@@ -1,6 +1,10 @@
 package kz.olzhas.inventoryservice.service.impl;
 
+import kz.olzhas.inventoryservice.dto.SupplierDTO;
+import kz.olzhas.inventoryservice.mapper.SupplierMapper.SupplierResponseMapper;
+import kz.olzhas.inventoryservice.model.Product;
 import kz.olzhas.inventoryservice.model.Supplier;
+import kz.olzhas.inventoryservice.model.SupplierProduct;
 import kz.olzhas.inventoryservice.repository.SupplierRepository;
 import kz.olzhas.inventoryservice.service.SupplierService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SupplierServiceImpl implements SupplierService {
     private final SupplierRepository supplierRepository;
+    private final SupplierResponseMapper supplierResponseMapper;
     @Override
     public void createSupplier(Supplier supplier) {
         supplierRepository.save(supplier);
@@ -45,5 +50,11 @@ public class SupplierServiceImpl implements SupplierService {
         if (supplier1.isPresent()){
             supplierRepository.deleteById(id);
         }
+    }
+
+    @Override
+    public SupplierDTO getById(Long id) {
+        Optional<Supplier> productOptional = supplierRepository.findById(id);
+        return productOptional.map(supplierResponseMapper::toDto).orElse(null);
     }
 }
