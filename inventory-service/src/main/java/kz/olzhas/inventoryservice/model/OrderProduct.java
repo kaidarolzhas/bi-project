@@ -16,7 +16,7 @@ public class OrderProduct {
     private Long id;
 
     @JoinColumn(name = "order_id")
-    private Long order_id;
+    private Long orderId;
 
     @ManyToOne
     @JoinColumn(name = "supplier_product_id")
